@@ -1,23 +1,23 @@
 #include <string>
+#include <stdlib.h>
 #include <iostream>
 #include <ctime>
 #include "buttonrpc.hpp"
 
 #ifdef _WIN32
-#include <Windows.h>  // use sleep
+#include <Windows.h> // use sleep
 #else
- #include <unistd.h>
+#include <unistd.h>
 #endif
 
-
-#define buttont_assert(exp) { \
-	if (!(exp)) {\
-		std::cout << "ERROR: "; \
-		std::cout << "function: " << __FUNCTION__  << ", line: " <<  __LINE__ << std::endl; \
-		system("pause"); \
-	}\
-}\
-
+#define buttont_assert(exp)                                                                   \
+	{                                                                                         \
+		if (!(exp))                                                                           \
+		{                                                                                     \
+			std::cout << "ERROR: ";                                                           \
+			std::cout << "function: " << __FUNCTION__ << ", line: " << __LINE__ << std::endl; \
+		}                                                                                     \
+	}
 
 struct PersonInfo
 {
@@ -26,11 +26,13 @@ struct PersonInfo
 	float height;
 
 	// must implement
-	friend Serializer& operator >> (Serializer& in, PersonInfo& d) {
+	friend Serializer &operator>>(Serializer &in, PersonInfo &d)
+	{
 		in >> d.age >> d.name >> d.height;
 		return in;
 	}
-	friend Serializer& operator << (Serializer& out, PersonInfo d) {
+	friend Serializer &operator<<(Serializer &out, PersonInfo d)
+	{
 		out << d.age << d.name << d.height;
 		return out;
 	}
@@ -43,7 +45,8 @@ int main()
 	client.set_timeout(2000);
 
 	int callcnt = 0;
-	while (1){
+	while (1)
+	{
 		std::cout << "current call count: " << ++callcnt << std::endl;
 
 		client.call<void>("foo_1");
@@ -55,7 +58,7 @@ int main()
 		int foo4r = client.call<int>("foo_4", 10, "buttonrpc", 100, (float)10.8).val();
 		buttont_assert(foo4r == 1000);
 
-		PersonInfo  dd = { 10, "buttonrpc", 170 };
+		PersonInfo dd = {10, "buttonrpc", 170};
 		dd = client.call<PersonInfo>("foo_5", dd, 120).val();
 		buttont_assert(dd.age == 20);
 		buttont_assert(dd.name == "buttonrpc is good");
@@ -69,7 +72,7 @@ int main()
 #ifdef _WIN32
 		Sleep(1000);
 #else
-        sleep(1);
+		sleep(1);
 #endif
 	}
 

@@ -96,11 +96,12 @@ public:
 
 		friend Serializer& operator >> (Serializer& in, value_t<T>& d) {
 			in >> d.code_ >> d.msg_;
-			if (d.code_ == 0) {
+			if (d.code_ == 0) { 
 				in >> d.val_;
 			}
 			return in;
 		}
+
 		friend Serializer& operator << (Serializer& out, value_t<T> d) {
 			out << d.code_ << d.msg_ << d.val_;
 			return out;
@@ -165,8 +166,9 @@ private:
 	inline void buttonrpc::callproxy(F fun, Serializer* pr, const char* data, int len ) //注意pr
 	{
 		callproxy_(fun, pr, data, len);
-	}
-	*/
+	} 
+			↓
+	*/ 
 	// 函数指针
 	template<typename R, typename... Params>
 	void callproxy_(R(*func)(Params...), Serializer* pr, const char* data, int len) {
