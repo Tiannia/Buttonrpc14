@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "ostream": "cpp",
-        "type_traits": "cpp",
-        "memory": "cpp",
-        "random": "cpp",
-        "optional": "cpp"
-    }
-}
