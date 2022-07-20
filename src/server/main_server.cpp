@@ -2,15 +2,14 @@
 #include <iostream>
 #include "buttonrpc.hpp"
 
-
-#define buttont_assert(exp) { \
-	if (!(exp)) {\
-		std::cout << "ERROR: "; \
-		std::cout << "function: " << __FUNCTION__  << ", line: " <<  __LINE__ << std::endl; \
-		system("pause"); \
-	}\
-}\
-
+#define buttont_assert(exp)                                                                   \
+	{                                                                                         \
+		if (!(exp))                                                                           \
+		{                                                                                     \
+			std::cout << "ERROR: ";                                                           \
+			std::cout << "function: " << __FUNCTION__ << ", line: " << __LINE__ << std::endl; \
+		}                                                                                     \
+	}
 
 // 测试例子
 void foo_1() {
@@ -78,7 +77,9 @@ PersonInfo foo_5(PersonInfo d,  int weigth)
 int main()
 {
 	buttonrpc server;
-	//server 中主要完成被调用函数的注册, 在收到网络发送的数据进行序列化还原后找到对应的调用函数和参数, 执行调用再将结果返回
+	// 1. 完成被调用函数的注册，
+	// 2. 在收到网络发送的数据进行序列化还原后找到对应的调用函数和参数，
+	// 3. 执行调用再将结果返回。
 	server.as_server(8888);
 
 	server.bind("foo_1", foo_1);

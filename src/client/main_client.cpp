@@ -2,13 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <ctime>
-#include "buttonrpc.hpp"
-
-#ifdef _WIN32
-#include <Windows.h> // use sleep
-#else
 #include <unistd.h>
-#endif
+#include "buttonrpc.hpp"
 
 #define buttont_assert(exp)                                                                   \
 	{                                                                                         \
@@ -69,12 +64,7 @@ int main()
 
 		buttonrpc::value_t<void> xx = client.call<void>("foo_7", 666);
 		buttont_assert(!xx.valid());
-#ifdef _WIN32
-		Sleep(1000);
-#else
 		sleep(1);
-#endif
 	}
-
 	return 0;
 }
